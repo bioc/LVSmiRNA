@@ -1,0 +1,13 @@
+void matprod(double *x, int nrx, int ncx, double *y, int nry, int ncy, double *z);
+void crossprod(double *x, int nrx, int ncx,double *y, int nry, int ncy, double *z);
+void tcrossprod(double *x, int nrx, int ncx,double *y, int nry, int ncy, double *z);
+void lvs_dgesv(double *A, double *Bin, double *B, int n, int p, double tol);
+double lvs_median(double *x, int length);
+double lvs_irls_delta(double *old, double *new, int length);
+double lvs_med_abs(double *x, int length);
+double lvs_psi_huber(double u, double k,int deriv);
+double lvs_min(double *x, int length);
+double lvs_check_conv(double *old, double *new, int len);
+double lvs_quartile3(double *x, int length);
+double lvs_psi_huber2(double u, double k, double sigma);
+double lvs_psi_huber3(double u, double k, double sigma, double mu);

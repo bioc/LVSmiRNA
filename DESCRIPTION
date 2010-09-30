@@ -1,0 +1,13 @@
+Package: LVSmiRNA
+Type: Package
+Title: LVS normalization for Agilent miRNA data
+Version: 0.99.4
+Date: 2010-09-20
+Depends: Biobase,quantreg,splines,MASS,limma,affy,methods, SparseM, vsn
+Suggests: multicore,snow, Rmpi
+Author: Stefano Calza, Suo Chen, Yudi Pawitam
+Maintainer: Stefano Calza <stefano.calza@biostatistics.it>
+biocViews: Microarray,AgilentChip,OneChannel,Preprocessing
+Description:
+License: GPL2
+LazyLoad: yes

@@ -1,0 +1,184 @@
+%\VignetteIndexEntry{LVSmiRNA}
+%\VignetteKeywords{Preprocessing, Agilent}
+%\VignetteDepends{LVSmiRNA}
+%\VignettePackage{LVSmiRNA}
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{float}
+\usepackage{natbib}
+\usepackage{setspace}
+
+\setstretch{1.5}
+
+\makeatletter
+    \newcommand\figcaption{\def\@captype{figure}\caption}
+    \newcommand\tabcaption{\def\@captype{table}\caption}
+\makeatother
+
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+
+\begin{document}
+
+\title{Quick start guide for using the \textit{LVSmiRNA} package in R}
+\author{Stefano Calza, Suo Chen and Yudi Pawitan}
+
+\maketitle
+\tableofcontents
+
+% \begin{abstract}
+% \end{abstract}
+
+\section{Overview}
+This document provides a brief guide to the \textit{LVSmiRNA} package, which is
+a package for normalization of microRNA (miRNA) microarray data.
+
+There are four components to this package. These are: i) Reading in data.  ii)
+Identify a subset of miRNAs with the smallest array-to-array variation, called
+LVS miRNAs.  iii) Normalization using the selected reference set.  iv)
+Summarization
+
+The LVS normalization method \cite{Calza2007} builds upon the fact that the
+data-driven housekeeping miRNAs that are the least variant across samples might
+be a good reference set for normalization. The total information extracted from
+probe-level intensity data of all samples is modeled as a function of array and
+probe effects using robust linear fit (\textit{rlm}) \cite{Huber1964}. The
+method selects miRNAs according to the array-effect statistic and residual
+standard deviation (SD) from the model. The modified LVS also incorporates a
+more complex \textit{joint} model to identify the LVS. Instead of assuming
+constant residual variation in \textit{rlm}, the dispersion parameters are
+modeled as a function of array and probe effects \cite{Lee2006}. The advantage
+of LVS normalization is that it is robust against violation of standard
+assumptions in most methods: the majority of features do not vary between
+samples and the proportion of up and down regulated expression are approximately
+equal.
+
+\section{Getting started}
+To load the \textbf{LVSmiRNA} in your R session, type
+
+<<load.lib>>=
+
+library(LVSmiRNA)
+
+@ 
+\subsection{Example data: Spike-in Agilent chip}
+We demonstrate the functionality of this R package using miRNA expression data
+from a spike-in experiment \cite{Willenbrock2009} which is included as part of
+the package. The input file \textbf{Comparison\_Array.txt} is a text file
+containing a header row, names of the samples in one column called 'Sample'.
+
+\begin{enumerate}
+\item To begin, users will have to save the relevant image processing output
+  files and the file containing samples descriptions (e.g. \textbf{Comparison
+    Array.txt} in a directory. The example data can be downloaded from the
+  author website
+  (\url{http://www.biostatistics.it/library/LVSmiRNA/example.tar.gz}).
+
+\item Read the samples description file (e.g. \texttt{Comparison\_Array.txt})
+  into \textsf{R}.
+
+<<import,eval=TRUE>>=
+
+dir.files <- system.file("extdata", package="LVSmiRNA")
+taqman.data <- read.table(file.path(dir.files,"Comparison_Array.txt"),header=TRUE,as.is=TRUE)
+
+@ 
+
+\item Read in the raw intensities data. Modify the \texttt{FileName} column in
+  \texttt{taqman.data} to match the position of the exemple files. The current
+  values assume that the files are located in the working directory.
+
+
+<<read.mir,eval=FALSE>>=
+
+## NOT RUN
+MIR <- read.mir(taqman.data)
+
+@ 
+
+\item A binary version of the data is already available in the package.
+
+<<load>>=
+
+data("MIR-spike-in")
+
+@   
+  
+\item Identify LVS miRNAs: calculate residual variance and array-to-array
+  variability which is measured by a $\chi^{2}$ statistic for the raw data
+  fitted by either standard rlm or joint model.
+  
+<<estVC>>=
+
+MIR.RA <- estVC(MIR)
+
+@ 
+
+
+\item Again for semplicity the object can be directly loaded from the package
+  
+<<MIR.RA>>=
+
+data("MIR_RA")
+
+@ 
+
+\item Make a scatter plot to visualize the relationship between the square-root
+  or logarithm of array effect versus the logrithm of the residual SD, called
+  the 'RA-plot'.
+
+<<plot,fig=TRUE>>=
+
+plot(MIR.RA)
+
+@ 
+
+\item Normalization: perform \textit{lvs} normalization based on
+  \texttt{MIR.RA}. The default procedure will first summarize data (based on
+  ``rlm'' method) and then normalize.
+  
+<<lvs>>=
+
+MIR.lvs <- lvs(MIR,RA=MIR.RA)
+
+@ 
+
+
+\item Now have a look at the box plot of data after normalization.
+
+<<boxplot,fig=TRUE>>=
+
+boxplot(MIR.lvs)
+
+@ 
+
+
+\item Summarization can also be performed without normalization, using different
+  methods.
+
+  
+<<summarize>>=
+
+ex.1 <- summarize(MIR,RA=MIR.RA,method="rlm")
+ex.2 <- summarize(MIR,method="medianpolish")
+
+@   
+
+
+\item If no \texttt{RA} argument is supplied to the function \texttt{lvs}, the
+  computation performed by \texttt{estVC} will be carried on within
+  \texttt{lvs}. As this is the most computationally intensive step in the
+  procedure we stringly suggest to perform it using \texttt{estVC} and saving
+  the result for following steps.
+
+
+\end{enumerate}
+
+\bibliographystyle{plainnat}
+\bibliography{LVSmiRNA}
+
+\end{document}

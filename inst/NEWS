@@ -1,0 +1,56 @@
+SC:19 Aug 2009	read.mir deliveres an RGList or EList depending on the presence of Bg values
+SC:20 Aug 2009	corrected bug in lvs.EList when supplying summarize.args
+      	  	added some S4 methods for EList object so to deal with EList or ExpressionSet the same way (v 0.1.2)
+SC:1 Sept 2009	added methods EList and RGList to estVC (v0.1.3)
+                added methods for RGList to utility functions (see utils.R)
+SC:11 Sept 2009 corrected bug in summarize.EList
+SC:11 Sept 2009 added vsn normalization option
+SC:14 Sept 2009 vsn might work on G-Gb
+SC:19 Sept 2009 median polish now allows (unbalanced #) replication
+YP:4 Oct 2009	add options to estVC.std
+		- weighted or asymptotic variance formula
+		- joint mean and variance model, or only mean model
+                - remove contr.helmert (revert to contr.treatment)
+		- output inclues ArrayEffects as expression index
+SC:10 Oct 2009  fixed summarize.R and normalize.R functions to adapt to new estVC output
+      	  	- within "lvs", using summarize.args=list(method="rlm") would use Array Effects
+		estimated by estVC.
+SC:14 Oct 2009  Summarization default now is "rlm" using Array Effects from RLM computation.
+SC:16 Oct 2009  added option (Atransf=c("sqrt","log")) to choose the transformation of 
+      	  	Array Chi-squared  (originally only sqrt). plot method modified accordingly.
+SC: 22 Oct 2009 Bug fixed in read.mir, as skip argument didn't account for automatic shift in connection pointer. Now
+       	   	use of seek (for OS where seek works) or reopening connection (Windows) would place the pointer back to the beginnig
+SC: 18 Nov 2009 v 0.2.4 Added option for stratified identification of lvs set, based on 
+       	   	quantiles of reference distribution (default: median i.e. n.strata =2)
+SC: 20 Nov 2009 v 0.2.5 added option for parallel computation using either multicore or snow
+SC: 26 Nov 2009 v 0.2.5 method default changed to "joint" in estVC
+SC: 21 Jan 2010 v 0.2.6 maxit in gamma.glm is 20 and residuals are checked for being bigger than .Machine$double.eps ^ 0.5
+       	   	instead of zero
+SC: 22 Jan 2010 v 0.2.7 - Allow to use affyPara for vsn computation.
+       	   	  	- Fixed bug on ArrayEffects ordering
+SC: 25 Jan 2010 v 0.2.8 - vsn parallel computation implemented without using affyPara in order to use "multicore". For relatively
+       	   	  	small samples using snow the way affyPara does increases the data transfer burden (we now split along cols)
+			which make the program running slower. It might me useful for bigger sample size (how much?).
+			Using multicore avoids data transfer to cores.
+SC: 26 Jan 2010 v 0.3.0 - C version for rlm and joint fit.
+SC: 25 Jan 2010 v 0.3.1 - Changed split to adapt to number of cores. This would affect only parallel computation
+SC: 02 Feb 2010 v 0.3.2 - Fixed some bugs in C code (max_iter was not set properly).
+       	   	  	- Removed splitting and in 0.3.1 as it doesn't improve computation time.
+			- Removed parallel vsn as it must be better setup. TODO
+			- Added option for plotting quantile line in plot.RA
+			- Now selection on LVS probes can be done also setting an horizontal line
+			- Now lvs accepts as argument a named vector that specify the LVS probes (selected outside)
+SC: 09 Feb 2010 v 0.3.3 - lvs allows to keep the LVS probe names as an attribute
+SC: 08 Mar 2010 v 0.3.4 - fixed bug in using level=probe
+SC: 22 Mar 2010 v 0.3.5 - little change in plot.RA (arg col.black and lwd=1.5 in rq line)
+SC: 24 Mar 2010 v 0.3.6 - Added converged and # of iterations in C code for rlm fit
+SuoChen: 24 May 2010 v 0.3.7 - Added man pages, examples and data
+SC: 25 May 2010 v 0.3.8 - Fixed man and some warnings in R CMD check
+SC: 04 Jun 2010 v 0.3.9 - Added a mixed VSN-smooth normalization method: normalization based on smooth-spline followed by 
+       	   	  	  variance stabilization without calibration (method="mixed")
+SC: 17 Jun 2010 v 0.3.10 - Added vignette
+SC: 30 Aug 2010 v 0.3.11 - Added NAMESPACE and modified "internal" functions to start with ".". Also some fix for
+       	   	  	   parallel execution in Windows.
+SC: 30 Aug 2010 v 0.9.1 - First version for submission to Bioconductor
+SC: 15 Sep 2010 v 0.9.3 - First revision for submission to Bioconductor
+SC: 20 Sep 2010 v 0.9.4 - Second revision for submission to Bioconductor. Removed usage of . for hidden functions. Fixed vignette 
