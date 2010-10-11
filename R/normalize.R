@@ -1,4 +1,4 @@
-## Time-stamp: <21-09-2010 15:41:32 on Goliath>
+## Time-stamp: <11-10-2010 13:42:16 on Goliath>
 #############################################################
 ##                                                         ##
 ## normalize.R                                             ## 
@@ -15,8 +15,7 @@ lvs <- function(RG,RA,ref,proportion=0.7,df=3,method=c("joint","rlm"),
                 summarize.args=NULL,stratify=TRUE,n.strata=3,
                 #subtract.bg=FALSE,## used only with vsn
                 level=c("mir","probe"),Atransf=c("sqrt","log"),
-                do.parallel=FALSE,cores=NULL,use.snow=FALSE,type.cluster=c("MPI","SOCK"),
-                name.cluster="cl", keep.iset=FALSE,verbose=FALSE,...)
+                keep.iset=FALSE,clName,verbose=FALSE,...)
   UseMethod("lvs")
 
 lvs.EList <- function(RG,RA,ref,proportion=0.7,df=3,method=c("joint","rlm"),
@@ -25,8 +24,7 @@ lvs.EList <- function(RG,RA,ref,proportion=0.7,df=3,method=c("joint","rlm"),
                       summarize.args=NULL,stratify=TRUE,n.strata=3,
                       ## subtract.bg=FALSE,## used only with vsn
                       level=c("mir","probe"),Atransf=c("sqrt","log"),
-                      do.parallel=FALSE,cores=NULL,use.snow=FALSE,type.cluster=c("MPI","SOCK"),
-                      name.cluster="cl",keep.iset=FALSE, verbose=FALSE,...)
+                      keep.iset=FALSE, clName, verbose=FALSE,...)
   {
     
     method <- match.arg(method)
@@ -39,42 +37,10 @@ lvs.EList <- function(RG,RA,ref,proportion=0.7,df=3,method=c("joint","rlm"),
     if(!is.null(preproc(RG)) && !is.null(preproc(RG)$Summarization))
       stop("Object must not be summarized")
 
-
-
-    ## if(do.parallel || use.snow)
-    ##   {
-    ##     if(.Platform$OS.type == "unix")
-    ##       {
-    ##         if(use.snow)
-    ##           {
-    ##             type.cluster <- match.arg(type.cluster)
-    ##             require(snow)
-    ##             if(is.null(cores))
-    ##               cores <- 2
-    ##             .basicClusterInit(clusterNumberNodes=cores,nameCluster=name.cluster,typeCluster=type.cluster)
-    ##           }
-    ##         else
-    ##           {
-    ##             require(multicore)
-    ##             if(is.null(cores) && is.null(cores <- getOption("cores")))
-    ##               cores <- multicore:::volatile$detectedCores
-    ##           }
-    ##       }
-    ##     else
-    ##       {
-    ##         type.cluster <- match.arg(type.cluster)
-    ##         require(snow)
-    ##         if(is.null(cores))
-    ##           cores <- 2
-            
-    ##         .basicClusterInit(clusterNumberNodes=cores,nameCluster=name.cluster,typeCluster=type.cluster)
-    ##       }
-    ##   }
-    
+   
     
     if(missing(RA))
-      RA <- estVC(RG,method=method,cov.formula=cov.formula,do.parallel=do.parallel,
-                  cores=cores,use.snow=use.snow,type.cluster=type.cluster,name.cluster=name.cluster)
+      RA <- estVC(RG,method=method,cov.formula=cov.formula,clName=clName,verbose=verbose)
 
     RA$Y <- eval(call(Atransf,RA$ArrayChi2))
 

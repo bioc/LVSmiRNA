@@ -7,29 +7,21 @@
   Given intensities from microRNA data, fits a robust linear model at probe level and return the residual standard deviations and the array effects.
 }
 \usage{
-estVC(object,method=c("joint","rlm"),cov.formula=c("weighted","asymptotic"),
-                      do.parallel=FALSE,cores=NULL,use.snow=FALSE,type.cluster=c("MPI","SOCK"),
-                      name.cluster = "cl")
-\S3method{estVC}{RGList}(object,method=c("joint","rlm"),cov.formula=c("weighted","asymptotic"),
-                      do.parallel=FALSE,cores=NULL,use.snow=FALSE,type.cluster=c("MPI","SOCK"),
-                      name.cluster = "cl")
-\S3method{estVC}{EList}(object,method=c("joint","rlm"),cov.formula=c("weighted","asymptotic"),
-                      do.parallel=FALSE,cores=NULL,use.snow=FALSE,type.cluster=c("MPI","SOCK"),
-                      name.cluster = "cl")
+
+estVC(object,method=c("joint","rlm"),cov.formula=c("weighted","asymptotic"),clName,verbose=FALSE)
+\S3method{estVC}{RGList}(object,method=c("joint","rlm"),cov.formula=c("weighted","asymptotic"),clName,verbose=FALSE)
+\S3method{estVC}{EList}(object,method=c("joint","rlm"),cov.formula=c("weighted","asymptotic"),clName,verbose=FALSE)
+
 }
 
 \arguments{
   \item{object}{ an object of class \code{EList} or \code{RGList}. }
   \item{method}{ character string specifying the estimating algorithm to be used. Choices are "joint" and "rlm".}
   \item{cov.formula}{ character string specifying the covariance formula to be used. Choices are "weighted" and "asymptotic".}
+  \item{clName}{Cluster object produced by \code{makeCluster}
+    function. Used only if \code{snow} is loaded.}
 
-  \item{do.parallel}{Perform computation in parallel. Default to FALSE}
-  \item{cores}{Number of cores/clusters to use if do.parallel=TRUE}
-  \item{use.snow}{Parallel computing based on package
-    \code{snow}. Default to FALSE which means using \code{multicore}}
-  \item{type.cluster}{Argument for \code{snow}}
-  \item{name.cluster}{Character. Cluster name. Make sure no other object with that
-    name exists.}
+  \item{verbose}{Print some debug messages.}
 }
 
 \details{
@@ -56,6 +48,31 @@ An object of class \code{RA}  containing three components as follows:
 # Starting from an EList object called MIR
 data("MIR-spike-in")
 AA <- estVC(MIR,method="joint")
+
+# Parellel execution using multicore
+
+library(multicore)
+
+# use this to set the desided number of
+#cores. Otherwise multicore would use all the available
+options(cores=8)
+
+AA <- estVC(MIR,method="joint")
+
+detach('package:multicore')
+
+# Parellel execution using snow
+
+
+library(snow)
+
+cl <- makeCluster(8,type="SOCK")
+
+# Or also...see ?makeCluster
+# cl <- makeCluster(8,type="MPI")
+
+AA <- estVC(MIR,method="joint",clName=cl)
+
 }}
 \keyword{ normalization }
 \keyword{ miRNA }

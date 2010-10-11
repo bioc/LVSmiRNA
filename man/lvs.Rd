@@ -12,25 +12,19 @@ lvs(RG,RA,ref,proportion=0.7,df=3,method=c("joint","rlm"),
                 cov.formula=c("weighted","asymptotic"),
                 spar=NULL,normalize.method=c("vsn","smooth.spline","mixed"),
                 summarize.args=NULL,stratify=TRUE,n.strata=3,
-                level=c("mir","probe"),Atransf=c("sqrt","log"),
-                do.parallel=FALSE,cores=NULL,use.snow=FALSE,type.cluster=c("MPI","SOCK"),
-                name.cluster = "cl",keep.iset=FALSE,
+                level=c("mir","probe"),Atransf=c("sqrt","log"),keep.iset=FALSE,clName,
                 verbose=FALSE,...)
 \S3method{lvs}{RGList}(RG,RA,ref,proportion=0.7,df=3,method=c("joint","rlm"),
                 cov.formula=c("weighted","asymptotic"),
                 spar=NULL,normalize.method=c("vsn","smooth.spline","mixed"),
                 summarize.args=NULL,stratify=TRUE,n.strata=3,
                 level=c("mir","probe"),Atransf=c("sqrt","log"),
-                do.parallel=FALSE,cores=NULL,use.snow=FALSE,type.cluster=c("MPI","SOCK"),
-                name.cluster = "cl", keep.iset=FALSE,
-                verbose=FALSE,...)
+                keep.iset=FALSE,clName,verbose=FALSE,...)
 \S3method{lvs}{EList}(RG,RA,ref,proportion=0.7,df=3,method=c("joint","rlm"),
                 cov.formula=c("weighted","asymptotic"),
                 spar=NULL,normalize.method=c("vsn","smooth.spline","mixed"),
                 summarize.args=NULL,stratify=TRUE,n.strata=3,
-                level=c("mir","probe"),Atransf=c("sqrt","log"),
-                do.parallel=FALSE,cores=NULL,use.snow=FALSE,type.cluster=c("MPI","SOCK"),
-                name.cluster = "cl", keep.iset=FALSE,
+                level=c("mir","probe"),Atransf=c("sqrt","log"),keep.iset=FALSE,clName,
                 verbose=FALSE,...)
 }
 \arguments{
@@ -53,14 +47,8 @@ lvs(RG,RA,ref,proportion=0.7,df=3,method=c("joint","rlm"),
     at miRNA level or probe-level.}
 
   \item{Atransf}{Which transformation to use for Array Effect}
-    \item{do.parallel}{Perform computation in parallel. Default to FALSE}
-  \item{cores}{Number of cores/clusters to use if do.parallel=TRUE}
-  \item{use.snow}{Parallel computing based on package
-    \code{snow}. Default to FALSE which means using \code{multicore}}
-  \item{type.cluster}{Argument for \code{snow}}
-  \item{name.cluster}{Character. Cluster name. Make sure no other object with that
-    name exists.}
   \item{keep.iset}{return the LVS ids}
+  \item{clName}{Cluster object. See \code{estVC}.}
   \item{verbose}{Verbose computation}
   \item{\dots}{ \code{\dots} }
 }

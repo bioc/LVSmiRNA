@@ -13,51 +13,15 @@
 ## Given a EList object estimates Array and probe effects  ##
 #############################################################
 
-estVC <- function(object,method=c("joint","rlm"),cov.formula=c("weighted","asymptotic"),
-                  do.parallel=FALSE,cores=NULL,use.snow=FALSE,type.cluster=c("MPI","SOCK"),
-                  name.cluster="cl")
+estVC <- function(object,method=c("joint","rlm"),cov.formula=c("weighted","asymptotic"),clName,
+                  verbose=FALSE)
   UseMethod("estVC")
 
 
-estVC.EList <- function(object,method=c("joint","rlm"),cov.formula=c("weighted","asymptotic"),
-                        do.parallel=FALSE,cores=NULL,use.snow=FALSE,type.cluster=c("MPI","SOCK"),
-                        name.cluster="cl")
+estVC.EList <- function(object,method=c("joint","rlm"),cov.formula=c("weighted","asymptotic"),clName,
+                        verbose=FALSE)
   {
 
-
-    
-    if(do.parallel || use.snow)
-      {
-        type.cluster <- match.arg(type.cluster)
-
-        if(.Platform$OS.type != "windows")
-          {
-            if(use.snow)
-              {
-                require(snow)
-                if(is.null(cores))
-                  cores <- 2
-                basicClusterInit(clusterNumberNodes=cores,nameCluster=name.cluster,typeCluster=type.cluster)
-              }
-            else
-              {
-                require(multicore)
-                if(is.null(cores) && is.null(cores <- getOption("cores")))
-                  cores <- multicore:::volatile$detectedCores
-                else
-                  cores <- cores
-              }
-          }
-        else
-          {
-            require(snow)
-            if(is.null(cores))
-              cores <- 2
-
-            basicClusterInit(clusterNumberNodes=cores,nameCluster=name.cluster, typeCluster=type.cluster)
-          }
-      }
-    
 
     method <- match.arg(method)
     cov.formula <- match.arg(cov.formula)
@@ -136,21 +100,7 @@ estVC.EList <- function(object,method=c("joint","rlm"),cov.formula=c("weighted",
       }
     
 
-    if(do.parallel)
-      {
-        if(use.snow)
-          {
-            out.lst <- parLapply(eval(parse(text=name.cluster)),in.list,do.fun,is.log=preproc(object)$is.log)
-            stopCluster(eval(parse(text=name.cluster)))
-            rm(list=eval(name.cluster),envir=.GlobalEnv)
-          }
-        else
-          out.lst <- mclapply(in.list,do.fun,is.log=preproc(object)$is.log,
-                              mc.cores=cores)
-        
-      }
-    else
-      out.lst <- lapply(in.list,do.fun,is.log=preproc(object)$is.log)
+    out.lst <- .fapply(X=in.list,FUN=do.fun,is.log=preproc(object)$is.log,clName=clName,verbose=verbose)
 
     out <- do.call("rbind",out.lst)
 

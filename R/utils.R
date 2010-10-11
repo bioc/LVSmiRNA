@@ -275,3 +275,40 @@ medpolish2 <-
   ans
 }
 
+
+
+
+
+## Modified from ShortRead
+
+.fapply <- function(X,FUN,...,clName,verbose)
+{
+  if (is.loaded("mc_fork", PACKAGE="multicore"))
+    {
+      mcLapply <- get('mclapply', envir=getNamespace('multicore'))
+      if (verbose)
+        message("using 'mclapply'")
+      results <- mcLapply(X, FUN, ...)
+    }
+  else if(!is.na(match("package:snow", search())))
+    {
+      if(missing(clName))
+        stop("clName must be supplied. See ?estVC")
+      
+      mcLapply <- get('parLapply', 'package:snow')
+      clEvalQ <- get('clusterEvalQ', 'package:snow')
+      
+      clEvalQ(clName, library(LVSmiRNA))
+      
+      if (verbose)
+        message("using snow 'parLapply'")
+      results <- mcLapply(clName, X, FUN, ...)
+    }
+  else {
+    if (verbose)
+      message("using lapply")
+    results <- lapply(X, FUN, ...)
+  }
+
+  return(results)
+}

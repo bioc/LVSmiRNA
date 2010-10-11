@@ -178,6 +178,67 @@ ex.2 <- summarize(MIR,method="medianpolish")
 
 \end{enumerate}
 
+
+\section{Parallel computation}
+
+The bottle neck in \texttt{LVSmiRNA} in terms of speed is the computation of
+Array \& probes effects (function \texttt{estVC}). Therefore \texttt{LVSmiRNA}
+allows for paralle computation using either \texttt{multicore} or \texttt{snow}.
+
+To use either packages the user must load them and set up the cluster (if
+needed) manually.
+
+\subsection{Using \texttt{multicore}}
+\label{sec:mcore}
+
+The package \texttt{multicore} requires minimum user intervention. The only
+option is the choice of the number of cores to use. By default
+\texttt{multicore} would use all the available. Setting a different number can
+be done in the \texttt{options}.
+
+<<multicore,eval=FALSE>>=
+
+require(multicore)
+options(cores=8)
+
+MIR.RA <- estVC(MIR)
+
+@ 
+
+\subsection{Using \texttt{snow}}
+\label{sec:mcore}
+
+The package \texttt{snow} requires the user to set up a cluster object
+manually. The user must choose the number of clusters and the type. See
+\texttt{?makeCluster} gor more details.
+
+Here is an example using ``SOCK'' cluster type.
+
+<<snow,eval=FALSE>>=
+
+require(snow)
+cl <- makeCluster(8,"SOCK")
+
+MIR.RA <- estVC(MIR,clName=cl)
+
+stopCluster(cl)
+
+@ 
+
+And here an example using ``MPI''. This would load the \texttt{Rmpi} package.
+
+<<mpi,eval=FALSE>>=
+
+cl <- makeCluster(8,"MPI")
+
+MIR.RA <- estVC(MIR,clName=cl)
+
+stopCluster(cl)
+
+@ 
+
+
+
 \bibliographystyle{plainnat}
 \bibliography{LVSmiRNA}
 
