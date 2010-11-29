@@ -20,8 +20,8 @@ importFrom(vsn, predict)
 
 exportMethods(exprs,"exprs<-",preproc,"preproc<-",boxplot,sampleNames,featureNames,probeNames)
 
-S3Method(plot,RA)
-S3Method(lvs,EList)
-S3Method(lvs,RGList)
-S3Method(summarize,EList)
-S3Method(summarize,RGList)
+exportMethods(plot)
+S3method(lvs, EList)
+S3method(lvs, RGList)
+S3method(summarize, EList)
+S3method(summarize, RGList)
