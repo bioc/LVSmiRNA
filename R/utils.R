@@ -152,6 +152,7 @@ setMethod("plot","RA",
                             },
                             invisible(NULL))
                    },
+                   "both"=
                    {
                      par(mfrow=c(1,2))
                      ylab = expression(sqrt("Array Effect"))
@@ -177,7 +178,8 @@ setMethod("plot","RA",
                             },
                             invisible(NULL))
                      
-                   },invisible(NULL))
+                   },
+                   invisible(NULL))
             
           }
           )

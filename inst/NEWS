@@ -53,4 +53,5 @@ SC: 30 Aug 2010 v 0.3.11 - Added NAMESPACE and modified "internal" functions to 
        	   	  	   parallel execution in Windows.
 SC: 30 Aug 2010 v 0.9.1 - First version for submission to Bioconductor
 SC: 15 Sep 2010 v 0.9.3 - First revision for submission to Bioconductor
-SC: 20 Sep 2010 v 0.9.4 - Second revision for submission to Bioconductor. Removed usage of . for hidden functions. Fixed vignette 
+SC: 20 Sep 2010 v 0.9.4 - Second revision for submission to Bioconductor. Removed usage of . for hidden functions. Fixed vignette
+SC: 08 Dec 2010 v 1.1.2 - Fixed switch() in plot (utils.R) syntax (only 1 unnamed argument when the first is character)
