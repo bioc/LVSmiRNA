@@ -2,7 +2,7 @@
 
 \alias{boxplot}
 
-\title{Determine duplicate elements}
+\title{Box Plots}
 
 \description{
 
