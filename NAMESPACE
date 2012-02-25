@@ -1,6 +1,6 @@
 useDynLib("LVSmiRNA")
 
-export(RLM,estVC,estVC.EList,estVC.RGList,lvs,lvs.EList,lvs.RGList,normalize.lvs,plot,read.mir,summarize,summarize.EList,rlmFit,
+export(RLM,estVC,estVC.EList,estVC.RGList,lvs,lvs.EList,lvs.RGList,normalize.lvs,read.mir,summarize,summarize.EList,rlmFit,
        summarize.RGList)
 
 importClassesFrom(limma, EList, RGList)
@@ -9,7 +9,8 @@ importMethodsFrom(affy, probeNames, updateMe)
 importMethodsFrom(Biobase, exprs, "exprs<-", featureNames, preproc,
                   "preproc<-", sampleNames)
 importMethodsFrom(SparseM, model.matrix, model.response)
-importFrom(graphics, boxplot, lines, par, plot)
+importFrom(BiocGenerics, plot)
+importFrom(graphics, boxplot, lines, par)
 importFrom(limma, protectMetachar)
 importFrom(methods, as, new)
 importFrom(stats, .getXlevels, approx, coef, fitted, is.empty.model,
@@ -18,7 +19,8 @@ importFrom(stats, .getXlevels, approx, coef, fitted, is.empty.model,
 importFrom(utils, find, read.table)
 importFrom(vsn, predict)
 
-exportMethods(exprs,"exprs<-",preproc,"preproc<-",boxplot,sampleNames,featureNames,probeNames)
+export(boxplot)
+exportMethods(exprs,"exprs<-",preproc,"preproc<-",sampleNames,featureNames,probeNames)
 
 exportMethods(plot)
 S3method(lvs, EList)
