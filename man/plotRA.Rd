@@ -1,11 +1,11 @@
 \name{plot-method}
 \docType{methods}
 \alias{plot-method}
-\alias{plot,RA-method}
+\alias{plot,RA,ANY-method}
 \title{Plot of Residual	Variance and Array Effect}
 \description{Plots results from \code{estVC}}
 \usage{
-\S4method{plot}{RA}(x,Atransf=c("both","sqrt","log"), abline=c("none","rq"),df=3,proportion=.7,
+\S4method{plot}{RA,ANY}(x,Atransf=c("both","sqrt","log"), abline=c("none","rq"),df=3,proportion=.7,
                     col="black",col.rq="red")
 }
 
