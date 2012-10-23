@@ -122,7 +122,8 @@ rlmFit <- function(x, y, maxit=20L, k=1.345, offset=NULL,
            A <- t(x)%*%x
            B <- diag(1, nrow(A))
            storage.mode(B) <- "double"
-           C <- .Call("La_dgesv", A, B, .Machine$double.eps , PACKAGE = "base")
+
+           C <- solve(A, B)
            
            cov_matrix <- (mean(psi^2)/(mean(psi_d))^2 * C)
            std_error =  sqrt(diag(cov_matrix))
@@ -135,8 +136,7 @@ rlmFit <- function(x, y, maxit=20L, k=1.345, offset=NULL,
            A <- crossprod(x*wt,x)
            B <- diag(1, nrow(A))
            storage.mode(B) <- "double"
-           Iinv <- .Call("La_dgesv", A, B, .Machine$double.eps , PACKAGE = "base")
-           
+           Iinv <- solve(A,B)
            
            cov_matrix = Iinv %*% J %*% Iinv
            std_error <- sqrt(diag(cov_matrix))
