@@ -86,7 +86,7 @@ estVC.EList <- function(object,method=c("joint","rlm"),cov.formula=c("weighted",
         B <- as.matrix(arr.effect)
         storage.mode(A) <- "double"
         storage.mode(B) <- "double"
-        C <- .Call("La_dgesv", A, B, .Machine$double.eps , PACKAGE = "base")
+        C <- solve(A, B)
         
         chi2 =  sum(arr.effect * C)
         ## chi2 =  sum(arr.effect * solve(covmat[wf,wf],arr.effect))
