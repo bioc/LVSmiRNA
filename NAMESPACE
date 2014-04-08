@@ -8,20 +8,23 @@ importClassesFrom(methods, ANY, list)
 importMethodsFrom(affy, probeNames, updateMe)
 importMethodsFrom(Biobase, exprs, "exprs<-", featureNames, preproc,
                   "preproc<-", sampleNames)
-importMethodsFrom(SparseM, model.matrix, model.response)
-importFrom(BiocGenerics, boxplot)
+importMethodsFrom(BiocGenerics, as.data.frame, as.vector, boxplot,
+                  colnames, do.call, duplicated, eval, get, lapply,
+                  match, NROW, order, paste, rbind, rep.int, rownames,
+                  sort, table, tapply, unique, unlist)
+importMethodsFrom(SparseM, as.matrix, diag, diff, model.matrix,
+                  model.response, solve, t)
 importFrom(stats4, plot)
-importFrom(graphics)
+importMethodsFrom(vsn, ncol, nrow, predict, vsn2)
+importFrom(graphics, lines, par)
 importFrom(limma, protectMetachar)
 importFrom(methods, as, new)
+importFrom(quantreg, rq)
 importFrom(stats, .getXlevels, approx, coef, fitted, is.empty.model,
-           median, medpolish, model.offset, predict, quantile,
-           smooth.spline)
-importFrom(utils, find, read.table)
-importFrom(vsn, predict)
-
+           median, model.offset, quantile, smooth.spline)
+importFrom(utils, read.table)
+importFrom(vsn, vsnMatrix)
 import(MASS)
-import(quantreg)
 
 export(boxplot)
 exportMethods(exprs,"exprs<-",preproc,"preproc<-",sampleNames,featureNames,probeNames)
