@@ -1,4 +1,4 @@
-## Time-stamp: <11-10-2010 13:42:16 on Goliath>
+## Time-stamp: <08-04-2014 09:49:11 on Masklin.med.unibs.it>
 #############################################################
 ##                                                         ##
 ## normalize.R                                             ## 
@@ -268,14 +268,11 @@ normalize.lvs <- function(object,ref,i.set,spar=NULL,
            vsn=
            {
 
-             require(vsn)
-             
              fit <- vsn2(object[i.set,],verbose=FALSE)
              object <- predict(fit,newdata=object)
            },
            mixed =
            {
-             require(vsn)
              
              ## smooth-spline normalization
              for (i in 1:ncol(object))

@@ -4,20 +4,8 @@
 
 }
 
-
-## .First.lib <- function(libname, pkgname) {
-
-  
-##   library.dynam("LVSmiRNA",pkgname,libname)
-  
-##   .C("Lapack_Initialize",PACKAGE="LVSmiRNA")
-
-## }
-
-
-
-.Last.lib <- function(libpath) {
-
-  library.dynam.unload("LVSmiRNA",libpath)
-
+.onUnload <- function(libpath) {
+    
+    library.dynam.unload("LVSmiRNA",libpath)
+    
 }

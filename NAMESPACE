@@ -1,7 +1,7 @@
 useDynLib("LVSmiRNA")
 
-export(RLM,estVC,estVC.EList,estVC.RGList,lvs,lvs.EList,lvs.RGList,normalize.lvs,read.mir,summarize,summarize.EList,rlmFit,
-       summarize.RGList)
+export(RLM,estVC,estVC.EList,estVC.RGList,lvs,lvs.EList,lvs.RGList,normalize.lvs,read.mir,summarize,summarize.EList,
+       rlmFit,summarize.RGList)
 
 importClassesFrom(limma, EList, RGList)
 importClassesFrom(methods, ANY, list)
@@ -11,7 +11,7 @@ importMethodsFrom(Biobase, exprs, "exprs<-", featureNames, preproc,
 importMethodsFrom(SparseM, model.matrix, model.response)
 importFrom(BiocGenerics, boxplot)
 importFrom(stats4, plot)
-importFrom(graphics, boxplot, lines, par)
+importFrom(graphics)
 importFrom(limma, protectMetachar)
 importFrom(methods, as, new)
 importFrom(stats, .getXlevels, approx, coef, fitted, is.empty.model,
@@ -19,6 +19,9 @@ importFrom(stats, .getXlevels, approx, coef, fitted, is.empty.model,
            smooth.spline)
 importFrom(utils, find, read.table)
 importFrom(vsn, predict)
+
+import(MASS)
+import(quantreg)
 
 export(boxplot)
 exportMethods(exprs,"exprs<-",preproc,"preproc<-",sampleNames,featureNames,probeNames)
