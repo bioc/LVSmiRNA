@@ -76,7 +76,7 @@ containing a header row, names of the samples in one column called 'Sample'.
   files and the file containing samples descriptions (e.g. \textbf{Comparison
     Array.txt} in a directory. The example data can be downloaded from the
   author website
-  (\url{http://www.biostatistics.it/library/LVSmiRNA/example.tar.gz}).
+  (\url{http://www.med.unibs.it/~calza/software/examples.tar.gz}).
 
 \item Read the samples description file (e.g. \texttt{Comparison\_Array.txt})
   into \textsf{R}.
@@ -95,8 +95,9 @@ taqman.data <- read.table(file.path(dir.files,"Comparison_Array.txt"),header=TRU
 
 <<read.mir,eval=FALSE>>=
 
+here.files <- "some/path/to/files"
 ## NOT RUN
-MIR <- read.mir(taqman.data)
+MIR <- read.mir(taqman.data,path=here.files)
 
 @ 
 
