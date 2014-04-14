@@ -90,7 +90,7 @@ taqman.data <- read.table(file.path(dir.files,"Comparison_Array.txt"),header=TRU
 
 \item Read in the raw intensities data. Modify the \texttt{FileName} column in
   \texttt{taqman.data} to match the position of the exemple files. The current
-  values assume that the files are located in the working directory.
+  values assume that the files are located in the "some/path/to/files" directory.
 
 
 <<read.mir,eval=FALSE>>=
