@@ -285,9 +285,9 @@ medpolish2 <-
 
 .fapply <- function(X,FUN,...,clName,verbose)
 {
-  if (is.loaded("mc_fork", PACKAGE="multicore"))
+  if (is.loaded("mc_fork", PACKAGE="parallel"))
     {
-      mcLapply <- get('mclapply', envir=getNamespace('multicore'))
+      mcLapply <- get('mclapply', envir=getNamespace('parallel'))
       if (verbose)
         message("using 'mclapply'")
       results <- mcLapply(X, FUN, ...)
