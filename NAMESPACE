@@ -26,6 +26,8 @@ importFrom(utils, read.table)
 importFrom(vsn, vsnMatrix)
 import(MASS)
 
+import(zlibbioc)
+
 export(boxplot)
 exportMethods(exprs,"exprs<-",preproc,"preproc<-",sampleNames,featureNames,probeNames)
 
