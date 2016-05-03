@@ -1,7 +1,7 @@
 Package: LVSmiRNA
 Type: Package
 Title: LVS normalization for Agilent miRNA data
-Version: 1.22.0
+Version: 1.23.0
 Date: 2015-02-12
 Depends: R (>= 3.1.0), methods, splines
 Imports: BiocGenerics, stats4, graphics, stats, utils, MASS, Biobase, quantreg, limma, affy, SparseM, vsn, zlibbioc
