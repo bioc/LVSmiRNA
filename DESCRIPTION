@@ -1,7 +1,7 @@
 Package: LVSmiRNA
 Type: Package
 Title: LVS normalization for Agilent miRNA data
-Version: 1.37.0
+Version: 1.37.1
 Date: 2015-02-12
 Depends: R (>= 3.1.0), methods, splines
 Imports: BiocGenerics, stats4, graphics, stats, utils, MASS, Biobase, quantreg, limma, affy, SparseM, vsn, zlibbioc
@@ -12,3 +12,4 @@ biocViews: Microarray,AgilentChip,OneChannel,Preprocessing
 Description: Normalization of Agilent miRNA arrays.
 License: GPL-2
 LazyLoad: yes
+PackageStatus: Deprecated
